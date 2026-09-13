@@ -1,9 +1,136 @@
 {
   "title": "导航",
   "settings": {
-    "openInNewTab": true
+    "openInNewTab": true,
+    "enablePing": true
   },
   "groups": [
+    {
+      "id": "local",
+      "name": "本地工具",
+      "color": "#6366f1",
+      "sites": [
+        {
+          "id": "local-nav",
+          "name": "导航站",
+          "url": "http://localhost:18080/",
+          "description": "本导航页自身，serve.sh 托管 dist/，默认 18080",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-agent-session-manage",
+          "name": "会话管理",
+          "url": "http://localhost:8080/index.html",
+          "description": "CodeBuddy 历史会话索引，./start.sh 启动，默认 8080",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-vpet",
+          "name": "VPet 桌宠",
+          "url": "http://localhost:8080/index.html",
+          "description": "虚拟桌宠 Web 原型，默认 8080；与会话管理冲突，建议改用 8081",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-workbench",
+          "name": "手机工作台",
+          "url": "http://localhost:20083",
+          "description": "workbench：FastAPI + Vue3 采集手机资源并管理 termux-services，默认 20083",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-device-manage",
+          "name": "设备管理",
+          "url": "http://localhost:20080/",
+          "description": "device_manage：SSH / WinRM 拉取设备版本与资源占用，默认 20080",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-disk-web",
+          "name": "磁盘分析 Web",
+          "url": "http://127.0.0.1:20082",
+          "description": "disk-manage 只读 Web 界面 disk_web.py，默认 20082",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-disk-manage-py",
+          "name": "磁盘分析 Python 版",
+          "url": "http://127.0.0.1:8000",
+          "description": "disk_manage.py 内置 Web，默认 8000；与手机工作台冲突，建议改端口",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-douyin-webui",
+          "name": "抖音下载",
+          "url": "http://localhost:20084/",
+          "description": "douyin_download_by_trae webui.py 进度页，默认 20084；本机环境受限无法抓签名",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-dsh-web",
+          "name": "DSH Web UI",
+          "url": "http://127.0.0.1:3080",
+          "description": "DeepSeek Harness 的 Web 界面 dsh web；dsh 已装 v0.1.1-rc.2-termux.1，但 web 未起，链接暂不可用",
+          "openInNewTab": true
+        }
+      ]
+    },
+    {
+      "id": "local-services",
+      "name": "本机服务",
+      "color": "#0ea5e9",
+      "sites": [
+        {
+          "id": "sv-termux-webui",
+          "name": "Termux 系统面板",
+          "url": "http://127.0.0.1:20088",
+          "description": "termux_webui：status/terminal/file/process/network/logs 六模块，FastAPI，默认 20088",
+          "openInNewTab": true
+        },
+        {
+          "id": "sv-file-server",
+          "name": "文件服务器",
+          "url": "http://127.0.0.1:28011",
+          "description": "script/http_server.py：多线程静态文件服务，python3 http_server.py start，默认 28011",
+          "openInNewTab": true
+        },
+        {
+          "id": "sv-wiki-webui",
+          "name": "Wiki 浏览器",
+          "url": "http://127.0.0.1:28012",
+          "description": "wiki-webui：只读浏览原子库/知识库，Fastify；需用户名密码 + TOTP 登录",
+          "openInNewTab": true
+        },
+        {
+          "id": "sv-status-web",
+          "name": "Termux 状态面板",
+          "url": "http://127.0.0.1:28900",
+          "description": "script/status-web.py：后台服务与端口资源看板，绑定 0.0.0.0，局域网可达",
+          "openInNewTab": true
+        },
+        {
+          "id": "sv-qq-maid-console",
+          "name": "机器人控制台",
+          "url": "http://127.0.0.1:28797/console/",
+          "description": "qq-maid-bot：axum 管理面，./botctl.sh start，端口取自 runtime-bot2/config/.env",
+          "openInNewTab": true
+        },
+        {
+          "id": "sv-version-monitor",
+          "name": "版本监控",
+          "url": "http://127.0.0.1:28899/",
+          "description": "qq-maid-version-monitor：零依赖 TS 服务，./run.sh start，默认 28899",
+          "openInNewTab": true
+        },
+        {
+          "id": "sv-ytdlp-webui",
+          "name": "yt-dlp Web UI",
+          "url": "http://127.0.0.1:3033",
+          "description": "software/yt-dlp/webui.py：下载任务进度页，python3 webui.py，默认 3033",
+          "openInNewTab": true
+        }
+      ]
+    },
     {
       "id": "search",
       "name": "搜索",
