@@ -2,6 +2,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* 仅在支持精确指针(鼠标)的设备生效，用于区分触屏与桌面交互 */
+@custom-variant hover-hover (@media (hover: hover) and (pointer: fine));
+
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;

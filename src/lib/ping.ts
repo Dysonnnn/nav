@@ -13,28 +13,66 @@ export function defaultProbeUrl(siteUrl: string): string {
   }
 }
 
-export function probe(probeUrl: string): Promise<PingStatus> {
+// `<img>` 是最可靠的探测手段，但要求目标有可加载的图片资源。许多自建服务
+// （含本机的 Python 静态服务、FastAPI）没有 favicon，会全部误判为不可达，
+// 因此在图片加载失败时用 no-cors HEAD 兜底：只要能建立连接并拿到 HTTP 响应
+// （不论状态码）即判定为可达。
+function probeImage(url: string): Promise<boolean> {
   return new Promise((resolve) => {
-    const cached = cache.get(probeUrl)
-    if (cached && Date.now() - cached.ts < TTL) {
-      resolve(cached.status)
-      return
-    }
     const img = new Image()
     let done = false
-    const finish = (status: PingStatus) => {
+    const finish = (ok: boolean) => {
       if (done) return
       done = true
       img.onload = img.onerror = null
-      cache.set(probeUrl, { status, ts: Date.now() })
-      resolve(status)
+      resolve(ok)
     }
-    const timer = setTimeout(() => finish('offline'), TIMEOUT)
-    img.onload = () => { clearTimeout(timer); finish('online') }
-    img.onerror = () => { clearTimeout(timer); finish('offline') }
-    const sep = probeUrl.includes('?') ? '&' : '?'
-    img.src = `${probeUrl}${sep}_=${Date.now()}`
+    const timer = setTimeout(() => finish(false), TIMEOUT)
+    img.onload = () => {
+      clearTimeout(timer)
+      finish(true)
+    }
+    img.onerror = () => {
+      clearTimeout(timer)
+      finish(false)
+    }
+    const sep = url.includes('?') ? '&' : '?'
+    img.src = `${url}${sep}_=${Date.now()}`
   })
+}
+
+function probeConnect(url: string): Promise<boolean> {
+  const ctrl = new AbortController()
+  const timer = setTimeout(() => ctrl.abort(), TIMEOUT)
+  return fetch(url, {
+    method: 'HEAD',
+    mode: 'no-cors',
+    cache: 'no-store',
+    signal: ctrl.signal,
+  })
+    .then(() => {
+      clearTimeout(timer)
+      return true
+    })
+    .catch(() => {
+      clearTimeout(timer)
+      return false
+    })
+}
+
+export function probe(probeUrl: string): Promise<PingStatus> {
+  const cached = cache.get(probeUrl)
+  if (cached && Date.now() - cached.ts < TTL) {
+    return Promise.resolve(cached.status)
+  }
+
+  return probeImage(probeUrl)
+    .then((imgOk) => (imgOk ? true : probeConnect(probeUrl)))
+    .then((ok) => {
+      const status: PingStatus = ok ? 'online' : 'offline'
+      cache.set(probeUrl, { status, ts: Date.now() })
+      return status
+    })
 }
 
 export function clearPingCache() {

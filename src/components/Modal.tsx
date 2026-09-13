@@ -13,7 +13,7 @@ export function Modal({ title, onClose, children }: { title: string; onClose: ()
     <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full max-w-md p-5 border border-zinc-200 dark:border-zinc-800"
+        className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full max-w-md p-5 border border-zinc-200 dark:border-zinc-800 max-h-[85vh] overflow-y-auto overscroll-contain"
       >
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-semibold">{title}</h3>

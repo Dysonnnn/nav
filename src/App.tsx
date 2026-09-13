@@ -289,26 +289,30 @@ export default function App() {
   return (
     <div className="min-h-full">
       <header className="sticky top-0 z-20 bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur border-b border-zinc-200 dark:border-zinc-800">
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-3">
-          <h1 className="text-lg font-semibold flex-shrink-0">{config.title}</h1>
-          <div className="flex-1 max-w-xl">
+        <div className="mx-auto max-w-6xl px-4 py-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h1 className="order-1 text-base sm:text-lg font-semibold flex-shrink-0">
+            {config.title}
+          </h1>
+          <div className="order-3 sm:order-2 w-full sm:w-auto sm:flex-1 sm:max-w-xl">
             <SearchBar value={query} onChange={setQuery} />
           </div>
-          <ThemeToggle />
-          {ADMIN_ENABLED && (
-            <button
-              type="button"
-              onClick={() => setEditMode((v) => !v)}
-              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                editMode
-                  ? 'bg-blue-600 text-white hover:bg-blue-500'
-                  : 'border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-              }`}
-            >
-              {editMode ? <IconCheck /> : <IconEdit />}
-              {editMode ? '完成' : '后台'}
-            </button>
-          )}
+          <div className="order-2 sm:order-3 ml-auto sm:ml-0 flex items-center gap-2">
+            <ThemeToggle />
+            {ADMIN_ENABLED && (
+              <button
+                type="button"
+                onClick={() => setEditMode((v) => !v)}
+                className={`inline-flex items-center gap-1.5 rounded-md px-2.5 sm:px-3 py-1.5 text-sm font-medium transition-colors ${
+                  editMode
+                    ? 'bg-blue-600 text-white hover:bg-blue-500'
+                    : 'border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                }`}
+              >
+                {editMode ? <IconCheck /> : <IconEdit />}
+                {editMode ? '完成' : '后台'}
+              </button>
+            )}
+          </div>
         </div>
 
         {ADMIN_ENABLED && editMode && (
