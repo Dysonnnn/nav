@@ -18,6 +18,13 @@
           "openInNewTab": true
         },
         {
+          "id": "local-nav-py",
+          "name": "导航站 Python 版",
+          "url": "http://localhost:18081/",
+          "description": "nav-py：stdlib+jQuery 并存版，编辑直接写回 config.json，自带反馈跟进",
+          "openInNewTab": true
+        },
+        {
           "id": "local-agent-session-manage",
           "name": "会话管理",
           "url": "http://localhost:8080/index.html",
@@ -27,8 +34,8 @@
         {
           "id": "local-vpet",
           "name": "VPet 桌宠",
-          "url": "http://localhost:8080/index.html",
-          "description": "虚拟桌宠 Web 原型，默认 8080；与会话管理冲突，建议改用 8081",
+          "url": "http://localhost:8081/index.html",
+          "description": "虚拟桌宠 Web 原型，serve.sh 前台运行，端口 8081（原 8080 让给会话管理）",
           "openInNewTab": true
         },
         {
@@ -43,6 +50,13 @@
           "name": "设备管理",
           "url": "http://localhost:20080/",
           "description": "device_manage：SSH / WinRM 拉取设备版本与资源占用，默认 20080",
+          "openInNewTab": true
+        },
+        {
+          "id": "local-bili-dl",
+          "name": "B站视频下载器",
+          "url": "http://localhost:20090/",
+          "description": "media_download_tool：B站链接批量下载 WebUI，支持在线播放，默认 20090",
           "openInNewTab": true
         },
         {

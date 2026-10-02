@@ -11,14 +11,16 @@
 | 名称 | 地址 | 端口 | 启动方式 | 端口出处 |
 |---|---|---|---|---|
 | 导航站（本页） | http://localhost:18080/ | 18080 | `cd /root/tools/nav && ./serve.sh start` | `nav/serve.sh` 默认 |
+| 导航站 Python 版 | http://localhost:18081/ | 18081 | termux-services 托管；手动 `cd /root/tools/nav-py && python3 nav_web.py start` | `nav-py/nav_web.py` 默认 |
 | 会话管理 | http://localhost:8080/index.html | 8080 | `cd agent-session-manage && ./start.sh` | `agent-session-manage/start.sh:21` |
-| VPet 桌宠 | http://localhost:8080/index.html | 8080 | `cd VPet && python3 -m http.server 8080` | `VPet/README.md:41` |
+| VPet 桌宠 | http://localhost:8081/index.html | 8081 | termux-services 托管；手动 `cd VPet && ./serve.sh run` | 2026-10-02 实施时改 8081（8080 被会话管理占用） |
 | 手机工作台 | http://localhost:20083 | 20083 | 开机自启（Termux:Boot + termux-services）；手动：`cd workbench && bash bench-ctrl.sh start` | `workbench/bench-ctrl.sh:18` |
 | 设备管理 | http://localhost:20080/ | 20080 | `cd device_manage && ./start.sh` | `device_manage/readme.md:86` |
+| B站视频下载器 | http://localhost:20090/ | 20090 | `cd media_download_tool && sh start.sh` | `media_download_tool/config.yaml`（`app.port`，start.sh 默认一致） |
 | 磁盘分析 Web | http://127.0.0.1:20082 | 20082 | `cd disk-manage && python3 disk_web.py` | `disk-manage/README.md:49` |
 | 磁盘分析 Python 版 | http://127.0.0.1:8000 | 8000 | `cd disk-manage && python3 disk_manage.py --path ~/` | `disk-manage/README.md:71` |
 | 抖音下载 | http://localhost:20084/ | 20084 | `cd douyin_download_by_trae && python webui.py` | `douyin_download_by_trae/webui.py:202`（README 写的 8000 已过时） |
-| DSH Web UI | http://127.0.0.1:3080 | 3080 | `dsh web` | `deepseek-herness-tool/AGENTS.md:12` |
+| DSH Web UI | http://127.0.0.1:3080 | 3080 | termux-services 托管（正确用法 `dsh --profile web`，node 冷启动约 12s） | `deepseek-herness-tool/AGENTS.md:12` |
 
 ### 1.2 /root 下其他目录的服务
 
@@ -26,13 +28,13 @@
 
 | 名称 | 地址 | 端口 | 启动方式 | 端口出处 |
 |---|---|---|---|---|
-| Termux 系统面板 | http://127.0.0.1:20088 | 20088 | `cd /root/termux_webui && .venv/bin/python -m src.core.main --bind 127.0.0.1:20088 --auth off` | `termux_webui/README.md:27` |
-| 文件服务器 | http://127.0.0.1:28011 | 28011 | `cd /root/script && python3 http_server.py start` | `script/http_server.py:147` |
-| Wiki 浏览器 | http://127.0.0.1:28012 | 28012 | `cd /root/wiki-webui && ./wiki-webui.sh start` | `wiki-webui/README.md:52` |
-| 机器人控制台 | http://127.0.0.1:28797/console/ | 28797 | `cd /root/qq-maid-bot && ./botctl.sh start` | `qq-maid-bot/runtime-bot2/config/.env:58` |
-| 版本监控 | http://127.0.0.1:28899/ | 28899 | `cd /root/qq-maid-version-monitor && ./run.sh start` | `qq-maid-version-monitor/run.sh:26` |
-| Termux 状态面板 | http://127.0.0.1:28900 | 28900 | `cd /root/script && python3 status-web.py --daemon` | `script/status-web.py:150` |
-| yt-dlp Web UI | http://127.0.0.1:3033 | 3033 | `cd /root/software/yt-dlp && python3 webui.py` | `software/yt-dlp/webui.py:14` |
+| Termux 系统面板 | http://127.0.0.1:20088 | 20088 | termux-services 托管；手动命令同左 | `termux_webui/README.md:27` |
+| 文件服务器 | http://127.0.0.1:28011 | 28011 | termux-services 托管（绑定 127.0.0.1）；手动 `python3 http_server.py start --foreground` | `script/http_server.py:147` |
+| Wiki 浏览器 | http://127.0.0.1:28012 | 28012 | termux-services 托管；手动 `cd /root/wiki-webui && npx tsx server/index.ts` | `wiki-webui/README.md:52` |
+| 机器人控制台 | http://127.0.0.1:28797/console/ | 28797 | termux-services 托管（`botctl.sh run` 前台）；手动 `./botctl.sh start` | `qq-maid-bot/runtime-bot2/config/.env:58` |
+| 版本监控 | http://127.0.0.1:28899/ | 28899 | termux-services 托管；手动 `./run.sh run` | `qq-maid-version-monitor/run.sh:26` |
+| Termux 状态面板 | http://127.0.0.1:28900 | 28900 | termux-services 托管（绑定 127.0.0.1）；首页响应慢（每请求现场采集，约 10-30s） | `script/status-web.py:150` |
+| yt-dlp Web UI | http://127.0.0.1:3033 | 3033 | termux-services 托管；手动 `python3 webui.py` | `software/yt-dlp/webui.py:14` |
 
 注意事项：
 - **Wiki 浏览器**需用户名密码 + TOTP 登录；绑定 `0.0.0.0`，局域网可达
@@ -46,9 +48,10 @@
 
 | 端口 | 声明服务 | 处理建议 |
 |---|---|---|
-| 8080 | 会话管理、VPet 桌宠 | VPet 改用 8081：`python3 -m http.server 8081` |
+| 8080 | 会话管理 | 无冲突（VPet 已改 8081） |
 | 8000 | 磁盘分析 Python 版 | 建议 `--port 8001` 避开历史占用 |
 | 18080 | 导航站 | 无冲突 |
+| 18081 | 导航站 Python 版 | 无冲突 |
 | 20080 | 设备管理 | 无冲突 |
 | 20082 | 磁盘分析 Web | 无冲突 |
 | 20083 | 手机工作台 | 无冲突 |
@@ -62,11 +65,10 @@
 
 | 端口 | 状态 |
 |---|---|
-| 18080、20080、20082、20083、20088 | 运行中（200） |
-| 8080 / 8000 / 3080 / 20084 | 未启动 |
-| 28011 / 28012 / 28797 / 28899 / 28900 / 3033 | 未启动 |
+| 8080、18080、18081、20080、20082、20083、20084、20088、28011、28012、28797、28899、28900、3033、3080 | 运行中（200） |
+| 8000 | 未启动（磁盘分析 Python 版，与 20083 工作台共存时可按需启动） |
 
-探测时间：2026-09-12。多数服务为按需启动、非开机自启；**手机工作台**例外，已配置 Termux 开机自启（Termux:Boot 拉起 runsvdir → termux-services 托管 workbench）。
+探测时间：2026-10-02。全部服务已注册 termux-services（runsv 守护 + 崩溃自愈），开机由 Termux:Boot 拉起。
 
 ## 3.5 开机启动状态
 
@@ -75,20 +77,23 @@
 | 服务 | 端口 | termux-services | Termux:Boot | 说明 |
 |---|---|---|---|---|
 | 导航站 nav | 18080 | ✅ | ✅ | 参考实现，含 proot 信号转发处理 |
-| 机器人控制台 qq-maid-bot | 28797 | ❌ | ✅ | 仅 boot 脚本直拉 `botctl.sh start`，无 supervise 守护；已有 `botctl.sh run` 前台模式，补 issue 后可直接 |
-| termux_webui | 20088 | ❌ | ❌ | |
-| 文件服务器 script | 28011 | ❌ | ❌ | |
-| Wiki 浏览器 | 28012 | ❌ | ❌ | |
-| Termux 状态面板 | 28900 | ❌ | ❌ | |
-| 版本监控 | 28899 | ❌ | ❌ | |
-| yt-dlp Web UI | 3033 | ❌ | ❌ | |
-| 会话管理 | 8080 | ❌ | ❌ | |
-| VPet 桌宠 | 8080 | ❌ | ❌ | 连启动脚本都没有，需先补 |
-| 手机工作台 workbench | 20083 | ❌ | ❌ | |
-| 设备管理 | 20080 | ❌ | ❌ | |
-| 磁盘分析（两个入口） | 20082 / 8000 | ❌ | ❌ | |
-| 抖音下载 | 20084 | ❌ | ❌ | 且本机环境受限，见 §1.1 备注 |
-| DSH Web UI | 3080 | ❌ | ❌ | 前置阻塞：dsh 已装 v0.1.1-rc.2-termux.1，但 `dsh web` 未跑起来 |
+| 导航站 Python 版 nav-py | 18081 | ✅ | ✅ | stdlib 单文件，编辑直接写回 config.json |
+| 会话管理 | 8080 | ✅ | ✅ | 2026-09-14 实施 |
+| VPet 桌宠 | 8081 | ✅ | ✅ | 2026-10-02 实施，新增 serve.sh，端口改 8081 避开会话管理 |
+| 手机工作台 workbench | 20083 | ✅ | ✅ | `bench-ctrl.sh fg --no-reload` 前台模式 |
+| 设备管理 | 20080 | ✅ | ✅ | issue 034 fixed |
+| 磁盘分析 | 20082 / 8000 | ✅ disk-web、disk-manage-web、disk-scan | ✅ | issue 035 fixed |
+| 抖音下载 | 20084 | ✅ | ✅ | 本机环境受限见 §1.1 备注 |
+| DSH Web UI | 3080 | ✅ | ✅ | 2026-10-02 实施；正确用法 `dsh --profile web`，node 冷启动约 12s |
+| termux_webui | 20088 | ✅ | ✅ | issue 022 resolved |
+| Wiki 浏览器 | 28012 | ✅ | ✅ | issue 0009 fixed |
+| 机器人控制台 qq-maid-bot | 28797 | ✅ | ✅ | 2026-10-02 补齐守护（`botctl.sh run` 前台），issue 001 fixed |
+| 版本监控 | 28899 | ✅ | ✅ | issue 001 resolved |
+| 文件服务器 script | 28011 | ✅ | ✅ | issue 001 resolved；bashrc 旧 hook 已清除 |
+| Termux 状态面板 | 28900 | ✅ | ✅ | issue 001 resolved；首页响应慢属正常 |
+| yt-dlp Web UI | 3033 | ✅ | ✅ | issue 001 resolved |
+
+> 本机全部 Web 服务均已纳入 runsv 守护 + Termux:Boot 开机拉起，崩溃自动恢复。
 
 各项目已建对应 issue 跟踪「服务开机启动」能力，详见各自的 `issues/`（或 `docs/issues/`）目录。
 
